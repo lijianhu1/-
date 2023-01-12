@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抽象工厂模式</title>
+</head>
+<body>
+  <script>
+    /* 抽象工厂模式并不直接生成实例，而是用于对产品类族的创建 */
+    class User {
+      constructor(name, role, pages) {
+        this.name = name
+        this.role = role
+        this.pages = pages
+      }
+      hello() {
+        console.log('User hello');
+      }
+    }
+    class SuperAdminUser extends User {
+      constructor(name) {
+        super(name, 'superAdmin', ['home', 'about', 'admin', 'auth'])
+      }
+      addRight() {
+        console.log('SuperAdminUser addRight');
+      }
+      addUser() {
+        console.log('SuperAdminUser addUser');
+      }
+    }
+    class AdminUser extends User {
+      constructor(name) {
+        super(name, 'admin', ['home', 'about', 'admin'])
+      }
+      addUser() {
+        console.log('SuperAdminUser addUser');
+      }
+    }
+    class StaffUser extends User {
+      constructor(name) {
+        super(name, 'staff', ['home', 'about'])
+      }
+    }
+    /* 抽象工厂方法，不返回实例，返回类 */
+    const getAbstractUserFactory = (role) => {
+      switch (role) {
+        case 'superAdmin':
+          return SuperAdminUser
+        case 'admin':
+          return AdminUser
+        case 'staff':
+          return StaffUser
+      
+        default:
+          throw new Error('请传入角色')
+          break;
+      }
+    }
+    const superAdminPerson = getAbstractUserFactory('superAdmin')
+    const li = new superAdminPerson('li')
+    const adminPerson = getAbstractUserFactory('admin')
+    const jian = new adminPerson('jian')
+    const staffPerson = getAbstractUserFactory('staff')
+    const hui = new staffPerson('hui')
+    console.log(li);
+    console.log(jian);
+    console.log(hui);
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const Person = function (name, age) {
+      this.name = name
+      this.age = age
+      return 123
+    }
+    const person1 = new Person('明', 18)
+    console.log('person1', person1);
+    /**
+     * 1. 重新定义一个对象
+     * 2. 将构造函数的prototype赋值给新对象的__proto__
+     * 3. 改变this指向，将this指向新的对象
+     * 4. 根据新对象的返回类型返回值，如果是object且不为null 或 function，则返回当前新对象，否则返回构造函数实例
+    */
+    const myNew = function (fn, ...rest) {
+   
+      /* 
+      const obj = {}
+      obj.__proto__ = fn.prototype
+      等同↓
+      */
+      const obj = Object.create(fn.prototype)
+      const result = fn.apply(obj, rest)
+      return ((result!==null && typeof result === 'object') || typeof result === 'function')?result:obj
+    }
+    const person2 = myNew(Person, '红', 18)
+    console.log('person2', person2);
+  </script>
+</body>
+</html>

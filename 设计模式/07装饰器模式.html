@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>装饰器模式</title>
+</head>
+<body>
+  
+  <script>
+    /* *
+      装饰器模式能够很好的对已有功能进行扩展，这样不会更改原有的代码对其他业务产生影响
+    */
+    Function.prototype.before = function (beforeFn) {
+      const self = this;
+      return function () {
+        /* 先执行before 再执行当前函数*/
+        beforeFn.apply(self, arguments)
+        return self.apply(this, arguments)
+      }
+    }
+    Function.prototype.after = function (afterFn) {
+      const self = this
+      return function () {
+        // 先执行当前方法，再执行after
+        const result = self.apply(this, arguments)
+        afterFn.apply(self, arguments)
+        return result
+      }
+    }
+    function test(a,b) {
+      console.log(a+b);
+    }
+    function log() {
+      console.log('this is log');
+    }
+    function _after() {
+      console.log('this is after');
+    }
+    const sub = test.before(log)
+    const sub2 = test.after(_after)
+    console.log(sub(1, 2));
+    console.log(sub2(2, 3));
+  </script>
+</body>
+</html>

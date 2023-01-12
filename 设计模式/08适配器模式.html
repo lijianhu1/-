@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>适配器模式</title>
+</head>
+<body>
+  <script>
+    /**
+     * 
+     */
+    class BaiduMap{
+      show() {
+        console.log('显示百度地图');
+      }
+    }
+    class GaodeMap {
+      display() {
+        console.log('显示高德地图');
+      }
+    }
+
+    function showMap(map) {
+      map.display()
+    }
+    class BaiduMapAdapater extends BaiduMap {
+      constructor() {
+        super()
+      }
+      display() {
+        this.show()
+      }
+    }
+    console.log(showMap(new GaodeMap()));
+    console.log(showMap(new BaiduMapAdapater()));
+    </script>
+</body>
+</html>

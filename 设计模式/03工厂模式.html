@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>工厂模式</title>
+</head>
+
+<body>
+  <script>
+    /** 工厂模式的有点，只需知道一个正确的参数就能获取所需的对象，无需知道创建的细节
+     * 但是函数内包含了所有对象的创建逻辑和判断逻辑，每增加新的构造函数还需要修改判断逻辑代码
+     * 当创建的对象多时该函数会成为庞大的函数，难以维护
+     * 所以简单工厂创建的对象数量较少
+     */
+    /* es5写法 */
+    /* function User(role, pages) {
+      this.role = role;
+      this.pages = pages
+    }
+    function Factory(role) {
+      switch (role) {
+        case 'superAdmin':
+          return new User('superAdmin', ['home', 'about', 'admin', 'auth'])
+        case 'admin':
+          return new User('admin', ['home', 'about', 'auth'])
+        case 'staff':
+          return new User('staff', ['home', 'about'])
+        default:
+          throw new Error('没有角色')
+          break;
+      }
+    } 
+    console.log(Factory('superAdmin'));
+    console.log(Factory('admin'));
+    console.log(Factory('staff'));
+    */
+    /* es6 class */
+    class User {
+      constructor (role, pages) {
+        this.role = role
+        this.pages = pages
+      }
+      /* class 的static静态方法不需要new 构造函数，可直接通过User.Factory()调用 */
+      static Factory(role) {
+        switch (role) {
+          case 'superAdmin':
+            return new User('superAdmin', ['home', 'about', 'admin', 'auth'])
+          case 'admin':
+            return new User('admin', ['home', 'about', 'auth'])
+          case 'staff':
+            return new User('staff', ['home', 'about'])
+          default:
+            throw new Error('没有角色')
+            break;
+        }
+      }
+    }
+    console.log(User.Factory('superAdmin'));
+    console.log(User.Factory('admin'));
+    console.log(User.Factory('staff'));
+
+ 
+  </script>
+</body>
+
+</html>

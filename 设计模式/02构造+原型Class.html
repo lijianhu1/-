@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>构造+原型 Class</title>
+</head>
+<body>
+  <script>
+    /* 通过class 可更加方便，清晰 */
+    class Person {
+      constructor(name, age) {
+        this.name = name
+        this.age = age
+      }
+      say() {
+        return `${this.name} - ${this.age}`
+      }
+    }
+    const ming = new Person('小明', 18)
+    const hong = new Person('小红', 28)
+    console.log(ming, hong);
+    console.log(ming.say(), hong.say());
+  </script>
+</body>
+</html>
